@@ -32,14 +32,18 @@ jobs:
           npm ci
           npm install -g electron-builder
 
-      - name: Build
+      - name: Build and Publish
         working-directory: ./rdp-manager
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           CSC_IDENTITY_AUTO_DISCOVERY: false
         run: |
-          electron-builder --win --publish never
+          if ("$env:GITHUB_REF".StartsWith("refs/tags/")) {
+            electron-builder --win --publish always
+          } else {
+            electron-builder --win --publish never
+          }
         shell: pwsh
 
       - name: Create Release
