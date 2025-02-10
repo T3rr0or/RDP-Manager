@@ -1,12 +1,10 @@
 const { app, BrowserWindow, ipcMain } = require('electron');
 const path = require('path');
 const Store = require('electron-store');
-Store.initRenderer();
+const store = new Store();
 const { spawn } = require('child_process');
 const { autoUpdater } = require('electron-updater');
 const log = require('electron-log');
-
-const store = new Store();
 
 // Configure logging for updater
 log.transports.file.level = 'info';

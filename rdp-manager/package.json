@@ -1,6 +1,6 @@
 {
   "name": "rdp-manager",
-  "version": "1.0.9",
+  "version": "1.0.10",
   "description": "RDP Connection Manager",
   "author": "T3rr0or",
   "publisher": "T3rr0or",
@@ -13,6 +13,8 @@
     "appId": "com.t3rr0or.rdpmanager",
     "productName": "RDP Manager",
     "copyright": "Copyright © 2024 T3rr0or",
+    "asar": true,
+    "forceCodeSigning": false,
     "publish": [
       {
         "provider": "github",
@@ -27,8 +29,7 @@
       ],
       "icon": "build/icon.ico",
       "publisherName": "T3rr0or",
-      "requestedExecutionLevel": "asInvoker",
-      "rfc3161TimeStampServer": "http://timestamp.digicert.com"
+      "requestedExecutionLevel": "asInvoker"
     },
     "nsis": {
       "oneClick": false,
@@ -38,35 +39,35 @@
       "license": "../LICENSE",
       "artifactName": "RDP-Manager-Setup-${version}.${ext}"
     },
+    "extraResources": [],
     "files": [
       "**/*",
-      "!node_modules/**/*",
-      "node_modules/electron-store/**/*",
-      "node_modules/conf/**/*",
-      "node_modules/atomically/**/*",
-      "node_modules/dot-prop/**/*",
-      "node_modules/env-paths/**/*",
-      "node_modules/json-schema-typed/**/*"
+      "!**/node_modules/*/{CHANGELOG.md,README.md,README,readme.md,readme}",
+      "!**/node_modules/*/{test,__tests__,tests,powered-test,example,examples}",
+      "!**/node_modules/*.d.ts",
+      "!**/node_modules/.bin",
+      "!**/*.{iml,o,hprof,orig,pyc,pyo,rbc,swp,csproj,sln,xproj}",
+      "!.editorconfig",
+      "!**/._*",
+      "!**/{.DS_Store,.git,.hg,.svn,CVS,RCS,SCCS,.gitignore,.gitattributes}",
+      "!**/{__pycache__,thumbs.db,.flowconfig,.idea,.vs,.nyc_output}",
+      "!**/{appveyor.yml,.travis.yml,circle.yml}",
+      "!**/{npm-debug.log,yarn.lock,.yarn-integrity,.yarn-metadata.json}"
     ],
-    "extraResources": [
-      {
-        "from": "node_modules/electron-store/",
-        "to": "node_modules/electron-store/",
-        "filter": ["**/*"]
-      },
-      {
-        "from": "node_modules/conf/",
-        "to": "node_modules/conf/",
-        "filter": ["**/*"]
+    "extraMetadata": {
+      "dependencies": {
+        "electron-store": "^8.1.0"
       }
-    ]
+    },
+    "nodeGypRebuild": false
   },
   "dependencies": {
     "electron-log": "^5.0.1",
-    "electron-store": "^8.2.0",
+    "electron-store": "^8.0.1",
     "electron-updater": "^6.1.7"
   },
   "devDependencies": {
+    "@types/electron-store": "^1.3.1",
     "electron": "^28.0.0",
     "electron-builder": "^24.9.1"
   }
