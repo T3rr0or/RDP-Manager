@@ -40,7 +40,15 @@
     },
     "files": [
       "**/*",
-      "!node_modules/**/*"
+      "!node_modules/**/*",
+      "node_modules/electron-store/**/*"
+    ],
+    "extraResources": [
+      {
+        "from": "node_modules/electron-store/",
+        "to": "node_modules/electron-store/",
+        "filter": ["**/*"]
+      }
     ]
   },
   "dependencies": {
