@@ -7,7 +7,7 @@
   "main": "main.js",
   "scripts": {
     "start": "electron .",
-    "build": "electron-builder"
+    "build": "electron-builder --win --publish always"
   },
   "build": {
     "appId": "com.t3rr0or.rdpmanager",

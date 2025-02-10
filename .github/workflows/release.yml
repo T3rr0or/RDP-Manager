@@ -39,9 +39,9 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           if ("$env:GITHUB_REF".StartsWith("refs/tags/")) {
-            npm run build
+            electron-builder --win --publish always
           } else {
-            electron-builder --win --config.win.certificateFile="" --config.win.certificatePassword=""
+            electron-builder --win --publish never --config.win.sign=false
           }
         shell: pwsh
 
