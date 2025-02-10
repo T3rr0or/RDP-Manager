@@ -18,11 +18,18 @@ jobs:
         with:
           node-version: '18'
 
+      - name: Change to project directory
+        run: cd rdp-manager
+
       - name: Install dependencies
-        run: npm install
+        run: |
+          cd rdp-manager
+          npm install
 
       - name: Build
-        run: npm run build
+        run: |
+          cd rdp-manager
+          npm run build
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
@@ -30,7 +37,7 @@ jobs:
         uses: softprops/action-gh-release@v1
         with:
           files: |
-            dist/*.exe
+            rdp-manager/dist/*.exe
           draft: false
           prerelease: false
         env:
