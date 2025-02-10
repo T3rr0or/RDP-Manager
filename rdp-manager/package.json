@@ -29,7 +29,10 @@
       ],
       "icon": "build/icon.ico",
       "publisherName": "T3rr0or",
-      "requestedExecutionLevel": "asInvoker"
+      "requestedExecutionLevel": "asInvoker",
+      "sign": false,
+      "signingHashAlgorithms": null,
+      "signDlls": false
     },
     "nsis": {
       "oneClick": false,
