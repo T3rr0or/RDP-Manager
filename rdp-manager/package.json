@@ -1,6 +1,6 @@
 {
   "name": "rdp-manager",
-  "version": "1.0.5",
+  "version": "1.0.6",
   "description": "RDP Connection Manager",
   "author": "T3rr0or",
   "publisher": "T3rr0or",
@@ -11,6 +11,8 @@
   },
   "build": {
     "appId": "com.t3rr0or.rdpmanager",
+    "productName": "RDP Manager",
+    "copyright": "Copyright © 2024 T3rr0or",
     "publish": [{
       "provider": "github",
       "owner": "T3rr0or",
@@ -22,13 +24,17 @@
         "portable"
       ],
       "icon": "build/icon.ico",
-      "publisherName": "T3rr0or"
+      "publisherName": "T3rr0or",
+      "requestedExecutionLevel": "asInvoker",
+      "rfc3161TimeStampServer": "http://timestamp.digicert.com"
     },
     "nsis": {
       "oneClick": false,
       "allowToChangeInstallationDirectory": true,
       "createDesktopShortcut": true,
-      "createStartMenuShortcut": true
+      "createStartMenuShortcut": true,
+      "license": "../LICENSE",
+      "artifactName": "RDP-Manager-Setup-${version}.${ext}"
     },
     "files": [
       "**/*",
