@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>RDP Connection Manager</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <div id="connectionsList"></div>
+        <button id="newConnection" class="button primary">+ New Connection</button>
+        <div class="attribution">
+            <p>Created by <a href="https://github.com/T3rr0or" target="_blank">T3rr0or</a></p>
+            <a href="https://buymeacoffee.com/t3rr0or" target="_blank" class="coffee-button">
+                <img src="https://cdn.buymeacoffee.com/buttons/v2/default-yellow.png" alt="Buy Me A Coffee">
+            </a>
+        </div>
+        
+        <div class="connection-details">
+            <button class="close-button">&times;</button>
+            <h2>Connection Details</h2>
+            <form id="connectionForm">
+                <div class="form-group">
+                    <label for="name">Name:</label>
+                    <input type="text" id="name" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="host">Host:</label>
+                    <input type="text" id="host" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="description">Description:</label>
+                    <textarea id="description"></textarea>
+                </div>
+                
+                <div class="button-group">
+                    <button type="button" id="connectBtn" class="button primary">Connect</button>
+                    <button type="submit" id="saveBtn" class="button success">Save</button>
+                    <button type="button" id="deleteBtn" class="button danger">Delete</button>
+                </div>
+            </form>
+        </div>
+        <div class="overlay"></div>
+    </div>
+    <script src="renderer.js"></script>
+</body>
+</html> 
