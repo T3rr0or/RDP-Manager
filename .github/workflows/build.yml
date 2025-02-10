@@ -1,22 +1,16 @@
-name: Release
+name: Build
 
 on:
   push:
-    tags:
-      - 'v*'
-
-permissions:
-  contents: write
+    branches: [ main ]
 
 jobs:
-  release:
+  build:
     runs-on: windows-latest
 
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
-        with:
-          fetch-depth: 0
 
       - name: Setup Node.js
         uses: actions/setup-node@v3
@@ -37,15 +31,5 @@ jobs:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           CSC_IDENTITY_AUTO_DISCOVERY: false
-        run: electron-builder --win
-        shell: pwsh
-
-      - name: Create Release
-        uses: softprops/action-gh-release@v1
-        with:
-          files: |
-            rdp-manager/dist/*.exe
-            rdp-manager/dist/latest.yml
-          draft: false
-          prerelease: false
-          generate_release_notes: true 
+        run: electron-builder --win --publish never
+        shell: pwsh 
