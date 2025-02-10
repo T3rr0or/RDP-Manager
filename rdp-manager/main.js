@@ -6,15 +6,15 @@ const { spawn } = require('child_process');
 const { autoUpdater } = require('electron-updater');
 const log = require('electron-log');
 
-// Configure logging for updater
+// Configure logging
 log.transports.file.level = 'info';
 autoUpdater.logger = log;
-
-// Auto download updates
 autoUpdater.autoDownload = true;
 
+let mainWindow;
+
 function createWindow() {
-  const mainWindow = new BrowserWindow({
+  mainWindow = new BrowserWindow({
     width: 1024,
     height: 768,
     webPreferences: {
@@ -25,52 +25,33 @@ function createWindow() {
   });
 
   mainWindow.loadFile('src/index.html');
-
+  
   // Check for updates
   autoUpdater.checkForUpdatesAndNotify();
 
   // Update events
-  autoUpdater.on('update-available', (info) => {
-    mainWindow.webContents.send('update-available', info);
-  });
-
-  autoUpdater.on('update-downloaded', (info) => {
-    mainWindow.webContents.send('update-downloaded', info);
-  });
-
-  autoUpdater.on('error', (err) => {
-    mainWindow.webContents.send('update-error', err);
+  ['update-available', 'update-downloaded', 'error'].forEach(event => {
+    autoUpdater.on(event, (info) => {
+      mainWindow.webContents.send(event, info);
+    });
   });
 }
 
 app.whenReady().then(createWindow);
-
-app.on('window-all-closed', () => {
-  if (process.platform !== 'darwin') {
-    app.quit();
-  }
-});
-
-app.on('activate', () => {
-  if (BrowserWindow.getAllWindows().length === 0) {
-    createWindow();
-  }
-});
+app.on('window-all-closed', () => process.platform !== 'darwin' && app.quit());
+app.on('activate', () => BrowserWindow.getAllWindows().length === 0 && createWindow());
 
 // IPC handlers
-ipcMain.handle('save-connections', async (event, connections) => {
+ipcMain.handle('save-connections', (_, connections) => {
   store.set('connections', connections);
   return true;
 });
 
-ipcMain.handle('load-connections', async () => {
-  return store.get('connections', []);
-});
+ipcMain.handle('load-connections', () => store.get('connections', []));
 
-ipcMain.handle('connect-rdp', async (event, connection) => {
+ipcMain.handle('connect-rdp', (_, connection) => {
   const tempPath = path.join(app.getPath('temp'), `rdp_${connection.id}.rdp`);
-  const rdpContent = `
-screen mode id:i:2
+  const rdpContent = `screen mode id:i:2
 use multimon:i:0
 desktopwidth:i:1920
 desktopheight:i:1080
@@ -107,21 +88,10 @@ gatewayprofileusagemethod:i:0
 promptcredentialonce:i:0
 use redirection server name:i:0
 rdgiskdcproxy:i:0
-kdcproxyname:s:
-  `.trim();
+kdcproxyname:s:`;
 
   require('fs').writeFileSync(tempPath, rdpContent);
-
-  if (process.platform === 'win32') {
-    spawn('mstsc.exe', [tempPath]);
-  } else {
-    // For Mac/Linux, you might want to use an alternative RDP client
-    // like FreeRDP or Remmina
-    console.log('RDP not supported on this platform yet');
-  }
+  process.platform === 'win32' && spawn('mstsc.exe', [tempPath]);
 });
 
-// Handle update installation
-ipcMain.handle('install-update', () => {
-  autoUpdater.quitAndInstall();
-}); 
+ipcMain.handle('install-update', () => autoUpdater.quitAndInstall()); 
