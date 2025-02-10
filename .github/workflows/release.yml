@@ -5,6 +5,9 @@ on:
     tags:
       - 'v*'
 
+permissions:
+  contents: write
+
 jobs:
   release:
     runs-on: windows-latest
@@ -18,18 +21,13 @@ jobs:
         with:
           node-version: '18'
 
-      - name: Change to project directory
-        run: cd rdp-manager
-
       - name: Install dependencies
-        run: |
-          cd rdp-manager
-          npm install
+        working-directory: ./rdp-manager
+        run: npm install
 
       - name: Build
-        run: |
-          cd rdp-manager
-          npm run build
+        working-directory: ./rdp-manager
+        run: npm run build
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
