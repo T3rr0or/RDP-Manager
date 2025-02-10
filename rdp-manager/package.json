@@ -1,8 +1,9 @@
 {
   "name": "rdp-manager",
-  "version": "1.0.4",
+  "version": "1.0.5",
   "description": "RDP Connection Manager",
   "author": "T3rr0or",
+  "publisher": "T3rr0or",
   "main": "main.js",
   "scripts": {
     "start": "electron .",
@@ -21,10 +22,7 @@
         "portable"
       ],
       "icon": "build/icon.ico",
-      "certificateFile": "build/certificate.pfx",
-      "certificatePassword": "",
-      "verifyUpdateCodeSignature": false,
-      "signAndEditExecutable": true
+      "publisherName": "T3rr0or"
     },
     "nsis": {
       "oneClick": false,
