@@ -21,13 +21,14 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@v3
         with:
-          node-version: '18'
+          node-version: '18.x'
           cache: 'npm'
+          cache-dependency-path: './rdp-manager/package-lock.json'
 
       - name: Install dependencies
         working-directory: ./rdp-manager
         run: |
-          npm install
+          npm ci
           npm install -g electron-builder
 
       - name: Build
@@ -38,7 +39,7 @@ jobs:
           CSC_LINK: ${{ secrets.WIN_CSC_LINK }}
           CSC_KEY_PASSWORD: ${{ secrets.WIN_CSC_KEY_PASSWORD }}
         run: |
-          electron-builder --win -p always
+          npm run build
 
       - name: Create Release
         uses: softprops/action-gh-release@v1
@@ -46,7 +47,9 @@ jobs:
         with:
           files: |
             rdp-manager/dist/*.exe
+            rdp-manager/dist/latest.yml
           draft: false
           prerelease: false
+          generate_release_notes: true
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} 
