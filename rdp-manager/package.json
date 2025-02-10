@@ -9,8 +9,23 @@
   },
   "build": {
     "appId": "com.t3rr0or.rdpmanager",
+    "publish": [{
+      "provider": "github",
+      "owner": "T3rr0or",
+      "repo": "RDP-Manager"
+    }],
     "win": {
-      "target": "portable"
+      "target": [
+        "nsis",
+        "portable"
+      ],
+      "icon": "build/icon.ico"
+    },
+    "nsis": {
+      "oneClick": false,
+      "allowToChangeInstallationDirectory": true,
+      "createDesktopShortcut": true,
+      "createStartMenuShortcut": true
     },
     "files": [
       "**/*",
@@ -18,7 +33,9 @@
     ]
   },
   "dependencies": {
-    "electron-store": "^8.1.0"
+    "electron-store": "^8.1.0",
+    "electron-updater": "^6.1.7",
+    "electron-log": "^5.0.1"
   },
   "devDependencies": {
     "electron": "^28.0.0",

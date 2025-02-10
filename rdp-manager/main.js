@@ -2,8 +2,16 @@ const { app, BrowserWindow, ipcMain } = require('electron');
 const path = require('path');
 const Store = require('electron-store');
 const { spawn } = require('child_process');
+const { autoUpdater } = require('electron-updater');
 
 const store = new Store();
+
+// Configure logging for updater
+autoUpdater.logger = require('electron-log');
+autoUpdater.logger.transports.file.level = 'info';
+
+// Auto download updates
+autoUpdater.autoDownload = true;
 
 function createWindow() {
   const mainWindow = new BrowserWindow({
@@ -17,6 +25,22 @@ function createWindow() {
   });
 
   mainWindow.loadFile('src/index.html');
+
+  // Check for updates
+  autoUpdater.checkForUpdatesAndNotify();
+
+  // Update events
+  autoUpdater.on('update-available', (info) => {
+    mainWindow.webContents.send('update-available', info);
+  });
+
+  autoUpdater.on('update-downloaded', (info) => {
+    mainWindow.webContents.send('update-downloaded', info);
+  });
+
+  autoUpdater.on('error', (err) => {
+    mainWindow.webContents.send('update-error', err);
+  });
 }
 
 app.whenReady().then(createWindow);
@@ -95,4 +119,9 @@ kdcproxyname:s:
     // like FreeRDP or Remmina
     console.log('RDP not supported on this platform yet');
   }
+});
+
+// Handle update installation
+ipcMain.handle('install-update', () => {
+  autoUpdater.quitAndInstall();
 }); 

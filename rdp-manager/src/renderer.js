@@ -92,4 +92,20 @@ document.getElementById('deleteBtn').onclick = async () => {
 };
 
 // Load connections when the app starts
-loadConnections(); 
+loadConnections();
+
+// Update handling
+window.rdpApi.onUpdateAvailable((event, info) => {
+    console.log('Update available:', info);
+    // You could show a notification here
+});
+
+window.rdpApi.onUpdateDownloaded((event, info) => {
+    if (confirm(`Version ${info.version} has been downloaded. Would you like to install it now?`)) {
+        window.rdpApi.installUpdate();
+    }
+});
+
+window.rdpApi.onUpdateError((event, error) => {
+    console.error('Update error:', error);
+}); 
