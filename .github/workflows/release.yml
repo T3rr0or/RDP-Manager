@@ -1,4 +1,4 @@
-name: Release
+name: Build and Release
 
 on:
   push:
@@ -21,31 +21,33 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@v3
         with:
-          node-version: '18.x'
+          node-version: '18'
           cache: 'npm'
           cache-dependency-path: './rdp-manager/package-lock.json'
 
       - name: Install dependencies
         working-directory: ./rdp-manager
         run: |
-          npm ci
+          npm install
           npm install -g electron-builder
 
-      - name: Build Application
+      - name: Build
         working-directory: ./rdp-manager
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          CSC_IDENTITY_AUTO_DISCOVERY: false
-        run: electron-builder --win
+        run: |
+          electron-builder --win -p always
         shell: pwsh
 
       - name: Create Release
         uses: softprops/action-gh-release@v1
+        if: startsWith(github.ref, 'refs/tags/')
         with:
           files: |
             rdp-manager/dist/*.exe
             rdp-manager/dist/latest.yml
           draft: false
           prerelease: false
-          generate_release_notes: true 
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} 
