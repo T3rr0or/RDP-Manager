@@ -28,11 +28,7 @@
         "portable"
       ],
       "icon": "build/icon.ico",
-      "publisherName": "T3rr0or",
-      "requestedExecutionLevel": "asInvoker",
-      "sign": false,
-      "signingHashAlgorithms": null,
-      "signDlls": false
+      "requestedExecutionLevel": "asInvoker"
     },
     "nsis": {
       "oneClick": false,
@@ -41,28 +37,7 @@
       "createStartMenuShortcut": true,
       "license": "../LICENSE",
       "artifactName": "RDP-Manager-Setup-${version}.${ext}"
-    },
-    "extraResources": [],
-    "files": [
-      "**/*",
-      "!**/node_modules/*/{CHANGELOG.md,README.md,README,readme.md,readme}",
-      "!**/node_modules/*/{test,__tests__,tests,powered-test,example,examples}",
-      "!**/node_modules/*.d.ts",
-      "!**/node_modules/.bin",
-      "!**/*.{iml,o,hprof,orig,pyc,pyo,rbc,swp,csproj,sln,xproj}",
-      "!.editorconfig",
-      "!**/._*",
-      "!**/{.DS_Store,.git,.hg,.svn,CVS,RCS,SCCS,.gitignore,.gitattributes}",
-      "!**/{__pycache__,thumbs.db,.flowconfig,.idea,.vs,.nyc_output}",
-      "!**/{appveyor.yml,.travis.yml,circle.yml}",
-      "!**/{npm-debug.log,yarn.lock,.yarn-integrity,.yarn-metadata.json}"
-    ],
-    "extraMetadata": {
-      "dependencies": {
-        "electron-store": "^8.1.0"
-      }
-    },
-    "nodeGypRebuild": false
+    }
   },
   "dependencies": {
     "electron-log": "^5.0.1",

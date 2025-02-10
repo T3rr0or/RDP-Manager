@@ -37,12 +37,9 @@ jobs:
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          CSC_IDENTITY_AUTO_DISCOVERY: false
         run: |
-          if ("$env:GITHUB_REF".StartsWith("refs/tags/")) {
-            electron-builder --win --publish always --config.win.sign=false --config.win.signDlls=false --config.forceCodeSigning=false
-          } else {
-            electron-builder --win --publish never --config.win.sign=false --config.win.signDlls=false --config.forceCodeSigning=false
-          }
+          electron-builder --win --publish never
         shell: pwsh
 
       - name: Create Release
