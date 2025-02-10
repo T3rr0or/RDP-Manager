@@ -13,11 +13,13 @@
     "appId": "com.t3rr0or.rdpmanager",
     "productName": "RDP Manager",
     "copyright": "Copyright © 2024 T3rr0or",
-    "publish": [{
-      "provider": "github",
-      "owner": "T3rr0or",
-      "repo": "RDP-Manager"
-    }],
+    "publish": [
+      {
+        "provider": "github",
+        "owner": "T3rr0or",
+        "repo": "RDP-Manager"
+      }
+    ],
     "win": {
       "target": [
         "nsis",
@@ -42,12 +44,12 @@
     ]
   },
   "dependencies": {
-    "electron-store": "^8.1.0",
-    "electron-updater": "^6.1.7",
-    "electron-log": "^5.0.1"
+    "electron-log": "^5.0.1",
+    "electron-store": "^8.2.0",
+    "electron-updater": "^6.1.7"
   },
   "devDependencies": {
     "electron": "^28.0.0",
     "electron-builder": "^24.9.1"
   }
-} 
+}
