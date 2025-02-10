@@ -41,12 +41,22 @@
     "files": [
       "**/*",
       "!node_modules/**/*",
-      "node_modules/electron-store/**/*"
+      "node_modules/electron-store/**/*",
+      "node_modules/conf/**/*",
+      "node_modules/atomically/**/*",
+      "node_modules/dot-prop/**/*",
+      "node_modules/env-paths/**/*",
+      "node_modules/json-schema-typed/**/*"
     ],
     "extraResources": [
       {
         "from": "node_modules/electron-store/",
         "to": "node_modules/electron-store/",
+        "filter": ["**/*"]
+      },
+      {
+        "from": "node_modules/conf/",
+        "to": "node_modules/conf/",
         "filter": ["**/*"]
       }
     ]
