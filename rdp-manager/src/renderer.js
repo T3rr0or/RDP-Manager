@@ -18,8 +18,12 @@ function renderConnectionsList() {
                 <div class="os-icon" style="background-image: url('https://cdn-icons-png.flaticon.com/512/888/888882.png')"></div>
                 <div class="monitor-stand"></div>
             </div>
-            <div class="connection-name">${conn.name}</div>
+            <div class="connection-info">
+                <div class="connection-name">${conn.name || conn.host}</div>
+                <div class="connection-description">${conn.description || ''}</div>
+            </div>
         `;
+        
         // Left click to connect
         div.onclick = async (e) => {
             e.preventDefault();
@@ -108,4 +112,17 @@ window.rdpApi.onUpdateDownloaded((event, info) => {
 
 window.rdpApi.onUpdateError((event, error) => {
     console.error('Update error:', error);
-}); 
+});
+
+function createConnectionCard(connection) {
+    const template = document.getElementById('connection-template');
+    const card = template.content.cloneNode(true);
+    
+    const hostname = card.querySelector('.hostname');
+    const description = card.querySelector('.description');
+    
+    hostname.textContent = connection.name || connection.host;  // Show name if available, otherwise host
+    description.textContent = connection.description || '';
+    
+    return card;
+} 
